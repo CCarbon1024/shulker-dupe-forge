@@ -2,13 +2,9 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.shulkerdupe.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "refmap": "shulkerdupe.refmap.json",
-  "mixins": [
-  ],
+  "compatibilityLevel": "JAVA_17",
   "client": [
     "ShulkerBoxScreenMixin",
-    "ClientPlayerEntityMixin",
     "ClientConnectionMixin"
   ],
   "injectors": {

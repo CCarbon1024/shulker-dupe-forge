@@ -17,8 +17,9 @@ import static net.shulkerdupe.Util.quickMoveItem;
 
 @Mixin(Connection.class)
 public class ClientConnectionMixin {
-    @Inject(at = @At("TAIL"), method = "send(Lnet/minecraft/network/protocol/Packet;Lio/netty/util/concurrent/GenericFutureListener;)V", cancellable = true)
-    public void send(Packet<?> packet, GenericFutureListener<? extends Future<? super Void>> callback, CallbackInfo ci) {
+    @Inject(at = @At("TAIL"),
+            method = "send(Lnet/minecraft/network/protocol/Packet;Lio/netty/util/concurrent/GenericFutureListener;)V")
+    public void send(Packet<?> packet, GenericFutureListener<? extends Future<? super Void>> p_129516_, CallbackInfo ci) {
         if (packet instanceof ServerboundPlayerActionPacket) {
             if (((ServerboundPlayerActionPacket) packet).getAction() == ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK) {
                 if (shouldDupe) {
