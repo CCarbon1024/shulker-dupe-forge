@@ -5,11 +5,8 @@ import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.NetworkEvent;
 
 import static net.shulkerdupe.SharedVariables.*;
 import static net.shulkerdupe.Util.CLIENT;
