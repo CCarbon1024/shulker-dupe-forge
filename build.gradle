@@ -15,10 +15,10 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'net'
-version = '1.1.1'
+version = '1.2.0'
 
 java {
-    archivesBaseName = 'shulkerdupe-1.19'
+    archivesBaseName = 'shulkerdupe-1.18and1.19'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 

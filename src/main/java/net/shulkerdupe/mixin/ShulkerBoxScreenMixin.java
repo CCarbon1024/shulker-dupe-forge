@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.shulkerdupe.MainClient;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,11 +27,11 @@ public class ShulkerBoxScreenMixin extends Screen {
             setFra(false);
             MainClient.thex = this.width;
             MainClient.they = this.height;
-            this.addRenderableWidget(new Button(this.width/2-90, this.height/2+35-145, 50, 20, Component.nullToEmpty("Dupe"), (button) -> {
+            this.addRenderableWidget(new Button(this.width/2-90, this.height/2+35-145, 50, 20, Component.nullToEmpty(I18n.get("shulkerdupe.dupe")), (button) -> {
                 if (shouldDupeAll) shouldDupeAll = false;
                 shouldDupe = true;
             }));
-            this.addRenderableWidget(new Button(this.width/2+40, this.height/2+35-145, 50, 20, Component.nullToEmpty("Dupe All"), (button) -> {
+            this.addRenderableWidget(new Button(this.width/2+40, this.height/2+35-145, 50, 20, Component.nullToEmpty(I18n.get("shulkerdupe.dupeall")), (button) -> {
                 if (shouldDupe) shouldDupe = false;
                 shouldDupeAll = true;
             }));
