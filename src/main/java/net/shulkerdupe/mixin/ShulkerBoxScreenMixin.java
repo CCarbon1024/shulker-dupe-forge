@@ -67,7 +67,7 @@ public class ShulkerBoxScreenMixin extends Screen {
 
             // Time and Run Button
             Button time = new Button(this.width / 2 - 20, this.height / 2 - 110, 40,
-                    20, Component.literal(SharedVariables.dupeTime + ""), (button) -> {
+                    20, Component.nullToEmpty(SharedVariables.dupeTime + ""), (button) -> {
                 if (SharedVariables.dupeTime > 0) {
                     SharedVariables.dupeTime--;
                     shouldDupeAll = true;
@@ -76,7 +76,7 @@ public class ShulkerBoxScreenMixin extends Screen {
             this.addRenderableWidget(time);
 
             // - Button
-            this.addRenderableWidget(new Button(this.width / 2 - 40, this.height / 2 - 110, 20, 20, Component.literal("-"), (button) -> {
+            this.addRenderableWidget(new Button(this.width / 2 - 40, this.height / 2 - 110, 20, 20, Component.nullToEmpty("-"), (button) -> {
                 if (hasShiftDown()) {
                     SharedVariables.dupeTime -= 7;
                 } else if (hasControlDown()) {
@@ -86,11 +86,11 @@ public class ShulkerBoxScreenMixin extends Screen {
                 } else {
                     SharedVariables.dupeTime -= 1;
                 }
-                time.setMessage(Component.literal(SharedVariables.dupeTime + ""));
+                time.setMessage(Component.nullToEmpty(SharedVariables.dupeTime + ""));
             }));
 
             // + Button
-            this.addRenderableWidget(new Button(this.width / 2 + 20, this.height / 2 - 110, 20, 20, Component.literal("+"), (button) -> {
+            this.addRenderableWidget(new Button(this.width / 2 + 20, this.height / 2 - 110, 20, 20, Component.nullToEmpty("+"), (button) -> {
                 if (hasShiftDown()) {
                     SharedVariables.dupeTime += 6;
                 } else if (hasControlDown()) {
@@ -101,7 +101,7 @@ public class ShulkerBoxScreenMixin extends Screen {
                     SharedVariables.dupeTime += 1;
                 }
 
-                time.setMessage(Component.literal(SharedVariables.dupeTime + ""));
+                time.setMessage(Component.nullToEmpty(SharedVariables.dupeTime + ""));
             }));
 
 
