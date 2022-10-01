@@ -29,4 +29,14 @@ public class Util {
             CLIENT.getConnection().send(new ServerboundContainerClickPacket(screenHandler.containerId, 0, slot, 0, ClickType.QUICK_MOVE, screenHandler.getSlot(0).getItem(), (Int2ObjectMap) stack));
         }
     }
+
+    public static void throwItem(int slot) {
+        if (CLIENT.player.containerMenu instanceof ShulkerBoxMenu) {
+            ShulkerBoxMenu screenHandler = (ShulkerBoxMenu) CLIENT.player.containerMenu;
+            Int2ObjectArrayMap<ItemStack> stack = new Int2ObjectArrayMap<>();
+            stack.put(slot, screenHandler.getSlot(slot).getItem());
+            CLIENT.getConnection().send(new ServerboundContainerClickPacket(screenHandler.containerId, 0, slot,
+                    0, ClickType.THROW, screenHandler.getSlot(0).getItem(), (Int2ObjectMap) stack));
+        }
+    }
 }
