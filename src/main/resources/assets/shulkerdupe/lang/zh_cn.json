@@ -1,4 +1,6 @@
 {
   "shulkerdupe.dupe": "复制",
-  "shulkerdupe.dupeall": "复制全部"
+  "shulkerdupe.dupeall": "复制全部",
+  "shulkerdupe.prefix":  "§5[潜影盒复制]§r : ",
+  "shulkerdupe.missBoxError": "你需要打开潜影盒并且准星对准潜影盒。"
 }

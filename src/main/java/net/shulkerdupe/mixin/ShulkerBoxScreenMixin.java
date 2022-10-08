@@ -10,15 +10,13 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.shulkerdupe.MainClient;
-import net.shulkerdupe.SharedVariables;
 import net.shulkerdupe.Util;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static net.shulkerdupe.SharedVariables.shouldDupe;
-import static net.shulkerdupe.SharedVariables.shouldDupeAll;
+import static net.shulkerdupe.SharedVariables.*;
 
 @Mixin(ShulkerBoxScreen.class)
 public class ShulkerBoxScreenMixin extends Screen {
@@ -31,77 +29,69 @@ public class ShulkerBoxScreenMixin extends Screen {
         if (isFra()) {
             setFra(false);
 
-            if (SharedVariables.dupeTime > 0) {
-                NonNullList<ItemStack> items = Minecraft.getInstance().player.containerMenu.getItems();
-                boolean isBoxFull = true;
-                for(int i = 0 ; i < 27 && isBoxFull ; i++) {
-                    if(items.get(i).isEmpty()) {
-                        isBoxFull = false;
-                    }
-                }
-                for (int i = 0; i < 27; i++) {
-                    for (int j = 27; j < 63; j++) {
-                        if (items.get(i).getItem().equals(items.get(j).getItem())) {
-                           /* if(isBoxFull) {
-                                Util.throwItem(j);
-                                continue;
-                            }*/
-                            Util.quickMoveItem(j);
-                        }
-                    }
-                }
-                SharedVariables.dupeTime--;
-                shouldDupeAll = true;
+            if (dupeTime > 0 && shouldAutoDupe) {
+                ThrowAndDupeAll();
+            } else if (dupeTime <= 0) {
+                shouldAutoDupe = false;
             }
 
             MainClient.thex = this.width;
             MainClient.they = this.height;
-            this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 2 - 110, 50, 20, Component.nullToEmpty(I18n.get("shulkerdupe.dupe")), (button) -> {
+
+            //dupe button
+            this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 2 - 110,
+                    50, 20, Component.nullToEmpty(I18n.get("shulkerdupe.dupe")), (button) -> {
                 if (shouldDupeAll) shouldDupeAll = false;
                 shouldDupe = true;
             }));
-            this.addRenderableWidget(new Button(this.width / 2 + 50, this.height / 2 - 110, 50, 20, Component.nullToEmpty(I18n.get("shulkerdupe.dupeall")), (button) -> {
+
+            //dupe all Button
+            this.addRenderableWidget(new Button(this.width / 2 + 50, this.height / 2 - 110,
+                    50, 20, Component.nullToEmpty(I18n.get("shulkerdupe.dupeall")), (button) -> {
                 if (shouldDupe) shouldDupe = false;
                 shouldDupeAll = true;
             }));
 
-            // Time and Run Button
+            // time and run button
             Button time = new Button(this.width / 2 - 20, this.height / 2 - 110, 40,
-                    20, Component.nullToEmpty(SharedVariables.dupeTime + ""), (button) -> {
-                if (SharedVariables.dupeTime > 0) {
-                    SharedVariables.dupeTime--;
-                    shouldDupeAll = true;
+                    20, Component.nullToEmpty(dupeTime + ""), (button) -> {
+                if (dupeTime > 0) {
+                    shouldAutoDupe = true;
+                    ThrowAndDupeAll();
                 }
             });
             this.addRenderableWidget(time);
 
-            // - Button
-            this.addRenderableWidget(new Button(this.width / 2 - 40, this.height / 2 - 110, 20, 20, Component.nullToEmpty("-"), (button) -> {
+            // - button
+            this.addRenderableWidget(new Button(this.width / 2 - 40, this.height / 2 - 110, 20,
+                    20, Component.nullToEmpty("-"), (button) -> {
                 if (hasShiftDown()) {
-                    SharedVariables.dupeTime -= 7;
+                    dupeTime -= 7;
                 } else if (hasControlDown()) {
-                    SharedVariables.dupeTime -= 12;
+                    dupeTime -= 12;
                 } else if (hasAltDown()) {
-                    SharedVariables.dupeTime -= 27;
+                    dupeTime -= 27;
                 } else {
-                    SharedVariables.dupeTime -= 1;
+                    dupeTime -= 1;
                 }
-                time.setMessage(Component.nullToEmpty(SharedVariables.dupeTime + ""));
+
+                time.setMessage(Component.nullToEmpty(dupeTime + ""));
             }));
 
-            // + Button
-            this.addRenderableWidget(new Button(this.width / 2 + 20, this.height / 2 - 110, 20, 20, Component.nullToEmpty("+"), (button) -> {
+            // + button
+            this.addRenderableWidget(new Button(this.width / 2 + 20, this.height / 2 - 110, 20,
+                    20, Component.nullToEmpty("+"), (button) -> {
                 if (hasShiftDown()) {
-                    SharedVariables.dupeTime += 6;
+                    dupeTime += 6;
                 } else if (hasControlDown()) {
-                    SharedVariables.dupeTime += 11;
+                    dupeTime += 11;
                 } else if (hasAltDown()) {
-                    SharedVariables.dupeTime += 27;
+                    dupeTime += 27;
                 } else {
-                    SharedVariables.dupeTime += 1;
+                    dupeTime += 1;
                 }
 
-                time.setMessage(Component.nullToEmpty(SharedVariables.dupeTime + ""));
+                time.setMessage(Component.nullToEmpty(dupeTime + ""));
             }));
 
 
@@ -111,6 +101,29 @@ public class ShulkerBoxScreenMixin extends Screen {
             setFra(true);
         }
 
+    }
+
+    private void ThrowAndDupeAll() {
+        NonNullList<ItemStack> items = Minecraft.getInstance().player.containerMenu.getItems();
+        boolean isBoxFull = true;
+        for (int i = 0; i < 27 && isBoxFull; i++) {
+            if (items.get(i).isEmpty()) {
+                isBoxFull = false;
+            }
+        }
+        for (int i = 0; i < 27; i++) {
+            for (int j = 27; j < 63; j++) {
+                if (items.get(i).getItem().equals(items.get(j).getItem())) {
+                    if (isBoxFull) {
+                        Util.throwItem(j);
+                        continue;
+                    }
+                    Util.quickMoveItem(j);
+                }
+            }
+        }
+        dupeTime--;
+        shouldDupeAll = true;
     }
 
     public boolean isFra() {

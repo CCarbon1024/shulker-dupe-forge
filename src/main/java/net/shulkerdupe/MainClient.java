@@ -1,5 +1,6 @@
 package net.shulkerdupe;
 
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
@@ -9,8 +10,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import static net.shulkerdupe.SharedVariables.*;
-import static net.shulkerdupe.Util.CLIENT;
-import static net.shulkerdupe.Util.log;
+import static net.shulkerdupe.Util.*;
 
 public class MainClient {
 
@@ -35,7 +35,7 @@ public class MainClient {
                     if (CLIENT.level.getBlockState(blockHit.getBlockPos()).getBlock() instanceof ShulkerBoxBlock && b1) {
                         CLIENT.gameMode.continueDestroyBlock(blockHit.getBlockPos(), Direction.DOWN);
                     } else {
-                        log("You need to have a shulker box screen open and look at a shulker box.");
+                        error(I18n.get("shulkerdupe.missBoxError"));
                         CLIENT.player.clientSideCloseContainer();
                         shouldDupe = false;
                         shouldDupeAll = false;

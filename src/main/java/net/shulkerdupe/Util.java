@@ -3,6 +3,7 @@ package net.shulkerdupe;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.inventory.ClickType;
@@ -12,8 +13,8 @@ import net.minecraft.world.item.ItemStack;
 public class Util {
     public static final Minecraft CLIENT = Minecraft.getInstance();
 
-    public static void log(String msg) {
-        CLIENT.player.displayClientMessage(Component.nullToEmpty("[Shulker Dupe]: " + msg), false);
+    public static void error(String msg) {
+        CLIENT.player.displayClientMessage(Component.nullToEmpty(I18n.get("shulkerdupe.prefix") + msg), false);
     }
     public static void quickMoveAllItems() {
         for (int i = 0; i < 27; i++) {
@@ -36,7 +37,7 @@ public class Util {
             Int2ObjectArrayMap<ItemStack> stack = new Int2ObjectArrayMap<>();
             stack.put(slot, screenHandler.getSlot(slot).getItem());
             CLIENT.getConnection().send(new ServerboundContainerClickPacket(screenHandler.containerId, 0, slot,
-                    0, ClickType.THROW, screenHandler.getSlot(0).getItem(), (Int2ObjectMap) stack));
+                    1, ClickType.THROW, screenHandler.getSlot(0).getItem(), (Int2ObjectMap) stack));
         }
     }
 }

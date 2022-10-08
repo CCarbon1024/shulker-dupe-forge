@@ -1,4 +1,6 @@
 {
   "shulkerdupe.dupe": "Dupe",
-  "shulkerdupe.dupeall": "Dupe All"
+  "shulkerdupe.dupeall": "Dupe All",
+  "shulkerdupe.prefix":  "§5[Shulker Dupe]§r : ",
+  "shulkerdupe.missBoxError": "You need to have a shulker box screen open and look at a shulker box."
 }

@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'net'
-version = '1.3.0'
+version = '1.3.1'
 
 java {
     archivesBaseName = 'shulkerdupe-1.18and1.19'
